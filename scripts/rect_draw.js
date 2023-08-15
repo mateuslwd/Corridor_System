@@ -1,11 +1,12 @@
 import * as M from './calc.js';
 import * as D from './draw.js';
 import {ferramenta} from './setup.js';
+import { Vertex } from './rect_vertex.js';
 
 export var corridors = [];
 
 //Elemento para a pré visualização do corredor
-export var corridorGhost = {
+var corridorGhost = {
     //posições iniciais e finais do corredor
     clicks: undefined,
     //Posição atual do mouse
@@ -19,7 +20,7 @@ export var corridorGhost = {
     render: ()=>{
         //Se ja tiver clicado a primeira vez
         if(corridorGhost.clicks != undefined){
-            D.drawRect(
+            D.rect(
                 'rgb(170, 170, 170)',
                 corridorGhost.clicks[0].x,
                 corridorGhost.clicks[0].y,
@@ -44,12 +45,14 @@ export class Corridor{
             h: this.end.y - this.start.y
         }
 
+        this.direction = this.size.w > this.size.h ? 'horizontal' : 'vertical';
+
         this.color = 'black';
 
     }
 
     render(){
-        D.drawRect(this.color, this.size)        
+        D.rect(this.color, this.size)        
     }
 
     static random(){
@@ -73,8 +76,26 @@ export class Corridor{
 
     }
 
+    static render(){
+
+        corridorGhost.render();
+
+        for(let i = 0; i < corridors.length; i++){
+
+            corridors[i].render();
+
+        }
+
+    }
+
 }
 
+//TEMPORARIO APENAS TESTE
+corridors.push(new Corridor(M.vector2(50, 50), M.vector2(150, 300)))
+corridors.push(new Corridor(M.vector2(150, 150), M.vector2(500, 250)))
+corridors.push(new Corridor(M.vector2(300, 10), M.vector2(400, 150)))
+corridors.push(new Corridor(M.vector2(150, 100), M.vector2(300, 140)))
+Vertex.atualizaVerticies();
 
 document.addEventListener('mousedown', (e)=>{
     
@@ -146,6 +167,9 @@ document.addEventListener('mousedown', (e)=>{
         corridorGhost.size.w = 0
         corridorGhost.size.h = 0
     
+        //Atualiza lista de pontos
+        Vertex.atualizaVerticies()
+
     }
     
 })

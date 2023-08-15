@@ -6,7 +6,7 @@ export function clearFrame(){
 
 }
 
-export function drawRect(color, ...size){
+export function rect(color, ...size){
 
     switch(size.length){
 
@@ -26,6 +26,34 @@ export function drawRect(color, ...size){
             C.closePath();
             break;
 
+    }
+
+}
+
+export function circle(color, size, ...pos){
+
+    switch(pos.length){
+
+        //Se estiver em formato de vetor
+        case 1:
+            C.beginPath();
+            C.fillStyle = color;
+            C.arc(pos[0].x, pos[0].y, size, 0, Math.PI * 2);
+            C.fill();
+            C.closePath();
+            break;
+        //Se foram passados separadamente
+        case 2:
+            C.beginPath();
+            C.fillStyle = color;
+            C.arc(pos[0], pos[1], size, 0, Math.PI * 2);
+            C.fill();
+            C.closePath();
+            break;
+        default:
+            console.log(`Formato de cordenadas não aceito.`);        
+            break
+    
     }
 
 }

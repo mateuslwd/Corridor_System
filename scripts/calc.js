@@ -42,6 +42,19 @@ export function distance(a, b){
 
 }
 
+export function box(...args){
+
+    switch(args.length){
+
+        case 1:
+            return {x: args[0][0], y: args[0][1], w: args[0][2], h: args[0][3]}
+        case 4:
+            return {x: args[0], y: args[1], w: args[2], h: args[3]}
+
+    }
+
+}
+
 export function collision(type, a, b){
 
     switch(type){
@@ -56,6 +69,15 @@ export function collision(type, a, b){
             } else {
                 return false
             }
+        case 'rect_rect':
+
+            if(a.x < b.x + b.w && a.x + a.w > b.x &&
+               a.y < b.y + b.h && a.y + a.h > b.y){
+                return true
+            } else {
+                return false
+            }
+
         default:
             console.log(`Teste de colisão ${type} desconhecido.`);
             break;
