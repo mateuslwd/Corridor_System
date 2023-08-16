@@ -1,6 +1,8 @@
 import * as M from './calc.js';
 import * as D from './draw.js';
 
+import {startNeighList} from './vertex_searchNeighbors.js'
+
 import {corridors} from "./rect_draw.js";
 
 export class Vertex{
@@ -9,6 +11,8 @@ export class Vertex{
 
         this.x = point.x;
         this.y = point.y;
+
+        this.neigh = [];
 
     }
 
@@ -22,14 +26,14 @@ export class Vertex{
 
         vertex = [];
 
-        let precision = 10
+        let precision = 1
 
         //Itera sob todos os corredores
         for(let i = 0; i < corridors.length; i++){
 
             let checkWhoIsColliding = (...args)=>{
 
-                let box = M.box(args)
+                let box = new M.Rect(args)
     
                 //Itera sob todos os corredores novamente
                 for(let j = 0; j < corridors.length; j++){
@@ -64,9 +68,9 @@ export class Vertex{
                 )
                 
                 if(topColidedWith == undefined){
-                    vertex.push(new Vertex(M.vector2(corridors[i].size.x + corridors[i].size.w / 2, corridors[i].size.y)))
+                    vertex.push(new Vertex(new M.vector2(corridors[i].size.x + corridors[i].size.w / 2, corridors[i].size.y)))
                 } else {
-                    vertex.push(new Vertex(M.vector2(corridors[i].size.x + corridors[i].size.w / 2, 
+                    vertex.push(new Vertex(new M.vector2(corridors[i].size.x + corridors[i].size.w / 2, 
                                                      corridors[topColidedWith].size.y + corridors[topColidedWith].size.h / 2)))
                 }
                 //#endregion
@@ -80,9 +84,9 @@ export class Vertex{
                 )
                 
                 if(botColidedWith == undefined){
-                    vertex.push(new Vertex(M.vector2(corridors[i].size.x + corridors[i].size.w / 2, corridors[i].size.y + corridors[i].size.h)))
+                    vertex.push(new Vertex(new M.vector2(corridors[i].size.x + corridors[i].size.w / 2, corridors[i].size.y + corridors[i].size.h)))
                 } else {
-                    vertex.push(new Vertex(M.vector2(corridors[i].size.x + corridors[i].size.w / 2,
+                    vertex.push(new Vertex(new M.vector2(corridors[i].size.x + corridors[i].size.w / 2,
                                                      corridors[botColidedWith].size.y + corridors[botColidedWith].size.h / 2)))    
                 }
                 //#endregion
@@ -98,9 +102,9 @@ export class Vertex{
                 )
                 
                 if(leftCollidedWith == undefined){
-                    vertex.push(new Vertex(M.vector2(corridors[i].size.x, corridors[i].size.y + corridors[i].size.h / 2)))
+                    vertex.push(new Vertex(new M.vector2(corridors[i].size.x, corridors[i].size.y + corridors[i].size.h / 2)))
                 } else {
-                    vertex.push(new Vertex(M.vector2(corridors[leftCollidedWith].size.x + corridors[leftCollidedWith].size.w / 2, corridors[i].size.y + corridors[i].size.h / 2)))
+                    vertex.push(new Vertex(new M.vector2(corridors[leftCollidedWith].size.x + corridors[leftCollidedWith].size.w / 2, corridors[i].size.y + corridors[i].size.h / 2)))
                 }
                 //#endregion
 
@@ -113,9 +117,9 @@ export class Vertex{
                 )
                 
                 if(rightCollidedWith == undefined){
-                    vertex.push(new Vertex(M.vector2(corridors[i].size.x + corridors[i].size.w, corridors[i].size.y + corridors[i].size.h / 2)))
+                    vertex.push(new Vertex(new M.vector2(corridors[i].size.x + corridors[i].size.w, corridors[i].size.y + corridors[i].size.h / 2)))
                 } else {
-                    vertex.push(new Vertex(M.vector2(
+                    vertex.push(new Vertex(new M.vector2(
                         corridors[rightCollidedWith].size.x + corridors[rightCollidedWith].size.w / 2,
                         corridors[i].size.y + corridors[i].size.h / 2
                     )))
@@ -125,6 +129,14 @@ export class Vertex{
             }
 
         }
+
+        startNeighList()
+
+    }
+
+    convertToVector(){
+
+        return new M.vector2(this.x, this.y)
 
     }
 

@@ -57,3 +57,28 @@ export function circle(color, size, ...pos){
     }
 
 }
+
+export function line(color, width, ...args){
+
+    switch(args.length){
+
+        //Se receber 1 linha
+        case 1:
+            break
+        //Se receber 2 pontos
+        case 2:
+            C.beginPath();
+            C.strokeStyle = color;
+            C.lineWidth = width;
+            C.moveTo(args[0].x, args[0].y);
+            C.lineTo(args[1].x, args[1].y);
+            C.stroke();
+            C.closePath();
+            break
+        //Se receber 4 argumentos separados
+        case 4:
+            break
+
+    }
+
+}

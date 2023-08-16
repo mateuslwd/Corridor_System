@@ -10,7 +10,7 @@ var corridorGhost = {
     //posições iniciais e finais do corredor
     clicks: undefined,
     //Posição atual do mouse
-    temp: M.vector2('zero'),
+    temp: new M.vector2('zero'),
     //Tamanho atual do corredor em relação ao mouse
     size: {
         w: 0,
@@ -91,17 +91,17 @@ export class Corridor{
 }
 
 //TEMPORARIO APENAS TESTE
-corridors.push(new Corridor(M.vector2(50, 50), M.vector2(150, 300)))
-corridors.push(new Corridor(M.vector2(150, 150), M.vector2(500, 250)))
-corridors.push(new Corridor(M.vector2(300, 10), M.vector2(400, 150)))
-corridors.push(new Corridor(M.vector2(150, 100), M.vector2(300, 140)))
+corridors.push(new Corridor(new M.vector2(50, 50), new  M.vector2(150, 300)))
+corridors.push(new Corridor(new M.vector2(150, 150), new M.vector2(500, 250)))
+corridors.push(new Corridor(new M.vector2(300, 10), new M.vector2(400, 150)))
+corridors.push(new Corridor(new M.vector2(150, 100), new M.vector2(300, 140)))
 Vertex.atualizaVerticies();
 
 document.addEventListener('mousedown', (e)=>{
     
     if(ferramenta == 'none'){
         
-        let index = Corridor.findCorridor(M.vector2(e.clientX, e.clientY));
+        let index = Corridor.findCorridor(new M.vector2(e.clientX, e.clientY));
 
         if(index != undefined){
 
@@ -128,42 +128,20 @@ document.addEventListener('mousedown', (e)=>{
             //Inicia 
             corridorGhost.clicks = [];
             //Guarda o local do primeiro clique
-            corridorGhost.clicks.push(M.vector2(e.clientX, e.clientY))
+            corridorGhost.clicks.push(new M.vector2(e.clientX, e.clientY))
             //Para o codigo
             return
         }
 
         //No segundo clique
         //Guarda a posição do segundo clique
-        corridorGhost.clicks.push(M.vector2(e.clientX, e.clientY))
-        
-        //Ordena os verticies para poder calcular as colisões futuramente
-
-        //Se o X do primeiro for maior que o X do segundo
-        if(corridorGhost.clicks[0].x > corridorGhost.clicks[1].x){
-            
-            let temp = corridorGhost.clicks[0].x
-
-            corridorGhost.clicks[0].x = corridorGhost.clicks[1].x
-            corridorGhost.clicks[1].x = temp
-        
-        }
-
-        //Se o Y do primeiro for maior que o Y do segundo
-        if(corridorGhost.clicks[0].y > corridorGhost.clicks[1].y){
-            
-            let temp = corridorGhost.clicks[0].y
-
-            corridorGhost.clicks[0].y = corridorGhost.clicks[1].y
-            corridorGhost.clicks[1].y = temp
-        
-        }
+        corridorGhost.clicks.push(new M.vector2(e.clientX, e.clientY))
 
         corridors.push(new Corridor(corridorGhost.clicks[0], corridorGhost.clicks[1]))
     
         //Reseta o contador de cliques
         corridorGhost.clicks = undefined
-        corridorGhost.temp = M.vector2('zero')
+        corridorGhost.temp = new M.vector2('zero')
         corridorGhost.size.w = 0
         corridorGhost.size.h = 0
     
@@ -182,7 +160,7 @@ document.addEventListener('mousemove', (e)=>{
         if(corridorGhost.clicks != undefined){
             
             //Atualiza a posição de onde será criado o corredor
-            corridorGhost.temp = M.vector2(e.clientX, e.clientY)
+            corridorGhost.temp = new M.vector2(e.clientX, e.clientY)
 
         }
     }
