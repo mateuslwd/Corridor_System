@@ -137,6 +137,26 @@ document.addEventListener('mousedown', (e)=>{
         //Guarda a posição do segundo clique
         corridorGhost.clicks.push(new M.vector2(e.clientX, e.clientY))
 
+        //O primeiro clique tem que ser o mais perto de zero
+
+        if(corridorGhost.clicks[0].x > corridorGhost.clicks[1].x){
+
+            let temp = corridorGhost.clicks[0].x
+
+            corridorGhost.clicks[0].x = corridorGhost.clicks[1].x
+            corridorGhost.clicks[1].x = temp
+
+        }
+
+        if(corridorGhost.clicks[0].y > corridorGhost.clicks[1].y){
+
+            let temp = corridorGhost.clicks[0].y
+
+            corridorGhost.clicks[0].y = corridorGhost.clicks[1].y
+            corridorGhost.clicks[1].y = temp
+
+        }
+
         corridors.push(new Corridor(corridorGhost.clicks[0], corridorGhost.clicks[1]))
     
         //Reseta o contador de cliques

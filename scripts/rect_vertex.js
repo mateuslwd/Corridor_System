@@ -1,9 +1,8 @@
 import * as M from './calc.js';
 import * as D from './draw.js';
 
-import {startNeighList} from './vertex_searchNeighbors.js'
-
 import {corridors} from "./rect_draw.js";
+import {initNeighbors} from "./vertex_searchNeighbors.js";
 
 export class Vertex{
 
@@ -130,7 +129,7 @@ export class Vertex{
 
         }
 
-        startNeighList()
+        initNeighbors()
 
     }
 
