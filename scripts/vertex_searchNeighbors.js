@@ -86,6 +86,18 @@ function areNeighbors(i, j){
 
 }
 
+class Edge{
+
+    constructor(index, vector, distance){
+
+        this.index = index;
+        this.vector = vector;
+        this.distance = distance;
+
+    }
+
+}
+
 export function initNeighbors(){
 
     for(let i = 0; i < vertex.length; i++){
@@ -96,7 +108,7 @@ export function initNeighbors(){
     
                 if(areNeighbors(i, j)){
     
-                    vertex[i].neigh.push(j)
+                    vertex[i].neigh.push(new Edge(j, vertex[j].convertToVector(), M.distance(vertex[i].convertToVector(), vertex[j].convertToVector())))
     
                 }
     

@@ -1,5 +1,24 @@
 import {C} from './setup.js'
 
+export function text(text, size, color, borderWidth, borderColor, position){
+
+    C.beginPath();
+    C.textAlign = "center";
+    C.font = `${size}px arial`
+    if(borderWidth != undefined && borderColor != undefined){
+        C.strokeStyle = borderColor;
+        C.lineWidth = borderWidth;
+        C.strokeText(text, position.x, position.y)
+        C.stroke()
+        C.closePath();
+        C.beginPath();
+    }
+    C.fillStyle = color;
+    C.fillText(text, position.x, position.y)
+    C.closePath();
+
+}
+
 export function clearFrame(){
 
     C.clearRect(0, 0, window.innerWidth, window.innerHeight);
@@ -77,6 +96,13 @@ export function line(color, width, ...args){
             break
         //Se receber 4 argumentos separados
         case 4:
+            C.beginPath();
+            C.strokeStyle = color;
+            C.lineWidth = width;
+            C.moveTo(args[0], args[1]);
+            C.lineTo(args[2], args[3]);
+            C.stroke();
+            C.closePath();
             break
 
     }

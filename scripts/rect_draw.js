@@ -1,7 +1,8 @@
 import * as M from './calc.js';
 import * as D from './draw.js';
 import {ferramenta} from './setup.js';
-import { Vertex } from './rect_vertex.js';
+import { Vertex, vertex } from './rect_vertex.js';
+import { Path } from './a_star.js';
 
 export var corridors = [];
 
@@ -158,7 +159,8 @@ document.addEventListener('mousedown', (e)=>{
         }
 
         corridors.push(new Corridor(corridorGhost.clicks[0], corridorGhost.clicks[1]))
-    
+        
+
         //Reseta o contador de cliques
         corridorGhost.clicks = undefined
         corridorGhost.temp = new M.vector2('zero')
@@ -167,6 +169,8 @@ document.addEventListener('mousedown', (e)=>{
     
         //Atualiza lista de pontos
         Vertex.atualizaVerticies()
+
+        Path.atualiza()
 
     }
     

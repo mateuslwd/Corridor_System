@@ -11,13 +11,49 @@ export class Vertex{
         this.x = point.x;
         this.y = point.y;
 
+        this.index = vertex.length
+
+        this.color = 'red'
+
         this.neigh = [];
 
     }
 
-    render(){
+    renderLines(){
 
-        D.circle('red', 7, this.x, this.y);
+        for(let i = 0; i < this.neigh.length; i++){            
+
+            D.line('yellow', 5, this.x, this.y, this.neigh[i].vector.x, this.neigh[i].vector.y)
+
+            //Escreve a distancia na tela
+
+            let x;
+            let y;
+
+            let deltaX = this.neigh[i].vector.x - this.x
+            let deltaY = this.neigh[i].vector.y - this.y
+
+            //Se estiverem alinhados horizontalmente
+            if(deltaX == 0){
+
+                x = this.x
+                y = this.y + deltaY / 2 + 7
+
+            } else {
+
+                //Estão alinhados vertcalmente
+                x = this.x + deltaX / 2
+                y = this.y + 7
+
+            }
+
+        }
+
+    }
+
+    renderPoints(){
+
+        D.circle(this.color, 7, this.x, this.y);
 
     }
 
@@ -141,12 +177,61 @@ export class Vertex{
 
     static render(){
 
+
         for(let i = 0; i < vertex.length; i++){
-            vertex[i].render();
+            vertex[i].renderLines();
+        }
+
+        for(let i = 0; i < vertex.length; i++){
+
+            vertex[i].renderPoints();
+
+            let pos = vertex[i].convertToVector()
+            pos.y -= 15
+
         }
 
     }
         
+}
+
+export class Point{
+
+    constructor(vector, color){
+
+        this.vector = vector;
+        this.color = color
+
+        this.closest;
+
+        this.searchClosestVertex();
+
+    }
+
+    searchClosestVertex(){
+
+        let dist = []
+
+        for(let i = 0; i < vertex.length; i++){
+
+            dist.push({d: this.vector.distanceTo(vertex[i].convertToVector()), i: i})
+
+        }
+
+        dist.sort((a, b) => a.d - b.d)
+
+        this.closest = vertex[dist[0].i]
+
+        this.closest.color = this.color;
+
+    }
+
+    render(){
+
+        this.vector.draw(this.color, 10)
+
+    }
+
 }
 
 export var vertex = [];

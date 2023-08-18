@@ -5,7 +5,7 @@ CANVAS.width = window.innerWidth;
 CANVAS.height = window.innerHeight * .8;
 
 
-export var ferramenta = 'corridorCreator';
+export var ferramenta = 'none';
 
 
 

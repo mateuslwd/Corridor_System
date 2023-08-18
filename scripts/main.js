@@ -1,30 +1,20 @@
 import * as D from './draw.js';
+import * as M from './calc.js';
 
 import {Corridor} from './rect_draw.js';
-import {Vertex, vertex} from './rect_vertex.js';
+import {Vertex, vertex, Point} from './rect_vertex.js';
+import { Path, paths } from './a_star.js';
+
+paths.push(new Path(new M.vector2(20, 20), new M.vector2(600, 200)))
 
 function frame(){
 
     D.clearFrame();    
 
-    Corridor.render()
-
-    for(let i = 0; i < vertex.length; i++){
-
-        let a = vertex[i].convertToVector()
-
-        for(let j = 0; j < vertex[i].neigh.length; j++){
-
-            let b = vertex[vertex[i].neigh[j]].convertToVector();
-
-            D.line('yellow', 6, a, b)
-
-        }
-
-
-    }
-
+    Corridor.render()   
     Vertex.render()
+
+    Path.render()
 
 }
 
