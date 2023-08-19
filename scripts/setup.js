@@ -1,27 +1,32 @@
 export const CANVAS = document.getElementById('canvas')
 export const C = CANVAS.getContext('2d')
 
-CANVAS.width = window.innerWidth;
-CANVAS.height = window.innerHeight * .8;
+CANVAS.width = window.innerWidth
+CANVAS.height = window.innerHeight
 
+var bG = CANVAS.getBoundingClientRect();
 
-export var ferramenta = 'none';
+export function mouseCanvasPosition(e){
 
+    let offSetX = bG.left;
+    let offSetY = bG.top;
 
+    let canvasX = e.clientX - offSetX;
+    let canvasY = e.clientY - offSetY;
 
-document.addEventListener('keypress', (e)=>{
+    let canvasWidth = CANVAS.width;
+    let canvasHeight = CANVAS.height;
 
-    switch(e.key){
+    let canvasSizeX = (canvasX / bG.width) * canvasWidth
+    let canvasSizeY = (canvasY / bG.height) * canvasHeight
 
-        case 'q':
-            ferramenta = 'corridorCreator';
-            console.log('Ferramenta de criação de corredores selecionada.')
-            break
-        case 'w':
-            ferramenta = 'none';
-            console.log('Todas as ferramentas de-selecionadas.')
-            break
+    return [canvasSizeX, canvasSizeY]
 
-    }
+}
 
-})
+//console.log(CANVAS.offsetHeight)
+export function changeTool(tool){
+    ferramenta = tool
+}
+
+export var ferramenta = undefined;

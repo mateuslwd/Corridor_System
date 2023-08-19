@@ -1,0 +1,56 @@
+#ferramentas{
+
+    width: 50%;
+    height: 13%;
+
+    margin-top: -35px;
+
+    background-color: rgb(119, 119, 119);
+
+    border-radius: 20px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.button{
+
+    list-style-type: none;
+
+    width: 70px;
+    height: 70px;
+
+    margin: 0px 5px;
+
+    background-color: red;
+    border-radius: 15px;
+
+    transition: all .5s;
+
+}
+
+.t_selected{
+
+    background-color: brown;
+
+}
+
+.t_hover{
+
+    margin: -25px 12px 0px 12px;
+
+    width: 110px;
+    height: 110px;
+
+}
+
+.t_semi-hover{
+
+    margin: -15px 7px 0px 7px;
+
+    width: 80px;
+    height: 80px;
+
+}

@@ -1,6 +1,7 @@
 import * as M from './calc.js'
 import * as D from './draw.js'
-import { vertex , Point} from './rect_vertex.js'
+import { vertex , Point, Vertex} from './rect_vertex.js'
+import { CANVAS, mouseCanvasPosition, ferramenta } from './setup.js'
 
 function lowestF(open){
 
@@ -45,11 +46,14 @@ export class Path{
         this.end = end
 
         this.path = []
+
         this.a_star()
 
     }
 
     a_star(){
+
+        Vertex.atualizaVerticies()
 
         let start_point = new Point(this.start, 'green');
         let start_vertex = start_point.closest;
@@ -157,7 +161,7 @@ export class Path{
 
     render(){
 
-        for(let i = 0; i < this.path.length -1 ; i++){
+         for(let i = 0; i < this.path.length -1 ; i++){
 
             let a = this.path[i].convertToVector()
             let b = this.path[i + 1].convertToVector()
@@ -189,3 +193,32 @@ export class Path{
 }
 
 export var paths = []
+
+let vertex1;
+let vertex2;
+
+CANVAS.addEventListener('mousedown', (e)=>{
+
+    if(ferramenta == "path"){
+
+        if(vertex1 == undefined){
+
+            vertex1 = new M.vector2(...mouseCanvasPosition(e))
+            return
+    
+        }
+    
+        vertex2 = new M.vector2(...mouseCanvasPosition(e))
+
+        //Faz o que precisa fazer
+        paths = []
+
+        
+        paths.push(new Path(vertex1, vertex2))
+
+        vertex1 = undefined   
+        vertex2 = undefined
+
+    }
+
+})

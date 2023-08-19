@@ -2,7 +2,12 @@ import * as M from './calc.js';
 import * as D from './draw.js';
 
 import {corridors} from "./rect_draw.js";
+import { ferramenta } from './setup.js';
 import {initNeighbors} from "./vertex_searchNeighbors.js";
+
+import { CANVAS, mouseCanvasPosition } from './setup.js';
+
+var boundingDistance = 20
 
 export class Vertex{
 
@@ -16,6 +21,8 @@ export class Vertex{
         this.color = 'red'
 
         this.neigh = [];
+
+        this.selected = false;
 
     }
 
@@ -53,7 +60,11 @@ export class Vertex{
 
     renderPoints(){
 
-        D.circle(this.color, 7, this.x, this.y);
+        if(!this.selected){
+            D.circle(this.color, 7, this.x, this.y);
+        } else {
+            D.circle(this.color, 12, this.x, this.y);
+        }
 
     }
 
@@ -235,3 +246,21 @@ export class Point{
 }
 
 export var vertex = [];
+
+CANVAS.addEventListener('mousemove', (e)=>{
+
+    if(ferramenta == "path"){
+
+        for(let i = 0; i < vertex.length; i++){
+
+            if(vertex[i].convertToVector().distanceTo(new M.vector2(...mouseCanvasPosition(e))) <= boundingDistance){
+                vertex[i].selected = true
+            } else {
+                vertex[i].selected = false
+            }
+
+        }
+
+    }
+
+})

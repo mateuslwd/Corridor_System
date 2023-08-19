@@ -1,8 +1,10 @@
 import * as M from './calc.js';
 import * as D from './draw.js';
 import {ferramenta} from './setup.js';
-import { Vertex, vertex } from './rect_vertex.js';
+import { Vertex } from './rect_vertex.js';
 import { Path } from './a_star.js';
+
+import { CANVAS, mouseCanvasPosition} from './setup.js';
 
 export var corridors = [];
 
@@ -91,18 +93,11 @@ export class Corridor{
 
 }
 
-//TEMPORARIO APENAS TESTE
-corridors.push(new Corridor(new M.vector2(50, 50), new  M.vector2(150, 300)))
-corridors.push(new Corridor(new M.vector2(150, 150), new M.vector2(500, 250)))
-corridors.push(new Corridor(new M.vector2(300, 10), new M.vector2(400, 150)))
-corridors.push(new Corridor(new M.vector2(150, 100), new M.vector2(300, 140)))
-Vertex.atualizaVerticies();
-
-document.addEventListener('mousedown', (e)=>{
+CANVAS.addEventListener('mousedown', (e)=>{
     
     if(ferramenta == 'none'){
         
-        let index = Corridor.findCorridor(new M.vector2(e.clientX, e.clientY));
+        let index = Corridor.findCorridor(new M.vector2(...mouseCanvasPosition(e)));
 
         if(index != undefined){
 
@@ -120,7 +115,7 @@ document.addEventListener('mousedown', (e)=>{
 
 
 
-document.addEventListener('mousedown', (e)=>{
+CANVAS.addEventListener('mousedown', (e)=>{
 
     //Se a ferramenta de criação de retangulos estiver selecionada
     if(ferramenta == "corridorCreator"){
@@ -129,14 +124,14 @@ document.addEventListener('mousedown', (e)=>{
             //Inicia 
             corridorGhost.clicks = [];
             //Guarda o local do primeiro clique
-            corridorGhost.clicks.push(new M.vector2(e.clientX, e.clientY))
+            corridorGhost.clicks.push(new M.vector2(...mouseCanvasPosition(e)))
             //Para o codigo
             return
         }
 
         //No segundo clique
         //Guarda a posição do segundo clique
-        corridorGhost.clicks.push(new M.vector2(e.clientX, e.clientY))
+        corridorGhost.clicks.push(new M.vector2(...mouseCanvasPosition(e)))
 
         //O primeiro clique tem que ser o mais perto de zero
 
@@ -176,7 +171,7 @@ document.addEventListener('mousedown', (e)=>{
     
 })
 
-document.addEventListener('mousemove', (e)=>{
+CANVAS.addEventListener('mousemove', (e)=>{
 
     //Se a ferramenta de criação de corredores estiver selecionada
     if(ferramenta == "corridorCreator"){
@@ -184,7 +179,7 @@ document.addEventListener('mousemove', (e)=>{
         if(corridorGhost.clicks != undefined){
             
             //Atualiza a posição de onde será criado o corredor
-            corridorGhost.temp = new M.vector2(e.clientX, e.clientY)
+            corridorGhost.temp = new M.vector2(...mouseCanvasPosition(e))
 
         }
     }
